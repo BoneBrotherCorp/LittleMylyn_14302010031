@@ -1,5 +1,7 @@
 package little_mylyn;
 
+import little_mylyn.biz.TaskManager;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -36,6 +38,9 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		//write tree structure back to database here
+		TaskManager.getTaskManager().saveTask();
+		
 		super.stop(context);
 	}
 
