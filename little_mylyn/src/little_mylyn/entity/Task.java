@@ -7,6 +7,7 @@ public class Task {
 	private TaskState state;
 	private TaskType type;
 	private String name;
+	private ClassFolder classFolder;
 	private List<TaskFile> fileList;
 	
 	// all tasks are "new" when created
@@ -15,6 +16,7 @@ public class Task {
 		this.type = type;
 		this.name = name;
 		fileList = new ArrayList<>();
+		classFolder = new ClassFolder(this);
 	}
 
 	public TaskState getState() {
@@ -33,6 +35,9 @@ public class Task {
 		this.type = type;
 	}
 
+	public String toString() {
+		return name;
+	}
 	public String getName() {
 		return name;
 	}
@@ -47,5 +52,9 @@ public class Task {
 
 	public void addFile(TaskFile file) {
 		fileList.add(file);
+	}
+
+	public ClassFolder getClassFolder() {
+		return classFolder;
 	}
 }

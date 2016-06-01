@@ -1,8 +1,10 @@
 package little_mylyn.biz;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import little_mylyn.entity.Task;
+import little_mylyn.entity.TaskType;
 
 public class TaskManager {
 	// use this list to store tasks, and write it back to the database
@@ -26,8 +28,7 @@ public class TaskManager {
 	 * @return list of all tasks
 	 */
 	public List<Task> getAllTask() {
-		//TODO 
-		return null;
+		return taskList;
 	}
 	/**
 	 * Add a new task
@@ -71,6 +72,9 @@ public class TaskManager {
 	 */
 	public void initTask() {
 		//TODO taskList = ... (read from database)
+		taskList = new ArrayList<>();
+		taskList.add(new Task(TaskType.debug, "task1"));
+		taskList.add(new Task(TaskType.new_feature, "task2"));
 	}
 	/**
 	 * Write task back to database, only invoked when plug-in stops
