@@ -2,6 +2,7 @@ package little_mylyn.views;
 
 import little_mylyn.actions.AddTaskAction;
 
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
@@ -26,9 +27,9 @@ public class TaskView extends ViewPart {
 		viewer.setSorter(new ViewerSorter());
 		viewer.setInput(getViewSite());
 
-//		IActionBars bars = getViewSite().getActionBars();
-//		IToolBarManager manager = bars.getToolBarManager();
-//		manager.add(new AddTaskAction());
+		IActionBars bars = getViewSite().getActionBars();
+		IToolBarManager manager = bars.getToolBarManager();
+		manager.add(new AddTaskAction());
 		
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "little_mylyn.viewer");

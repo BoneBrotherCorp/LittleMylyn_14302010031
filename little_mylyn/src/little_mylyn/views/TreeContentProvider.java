@@ -1,4 +1,4 @@
-package little_mylyn.views;
+  package little_mylyn.views;
 
 import little_mylyn.biz.TaskManager;
 import little_mylyn.entity.Task;
