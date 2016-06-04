@@ -2,7 +2,6 @@ package little_mylyn.views;
 
 import little_mylyn.actions.AddTaskAction;
 
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
@@ -15,15 +14,16 @@ import org.eclipse.ui.part.ViewPart;
 public class TaskView extends ViewPart {
 
 	public static final String ID = "little_mylyn.views.TaskView";
+	private static TreeViewer viewer;
 	
-	private TreeViewer viewer;
-	
+	public static void refresh() {
+		viewer.refresh();
+	}
 	@Override
 	public void createPartControl(Composite parent) {
 		// TODO Auto-generated method stub
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(new TreeContentProvider(this));
-//		viewer.setLabelProvider(new ViewLabelProvider());
 		viewer.setSorter(new ViewerSorter());
 		viewer.setInput(getViewSite());
 
@@ -33,10 +33,6 @@ public class TaskView extends ViewPart {
 		
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "little_mylyn.viewer");
-//		makeActions();
-//		hookContextMenu();
-//		hookDoubleClickAction();
-//		contributeToActionBars();
 	}
 
 	/**
@@ -46,5 +42,5 @@ public class TaskView extends ViewPart {
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
-	
+
 }
