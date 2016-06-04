@@ -63,21 +63,6 @@ public class TaskManager {
 		}
 	}
 	/**
-	 * Update a task
-	 * @param task
-	 * @return true if succeed
-	 */
-	public boolean updateTask(Task task) {
-		if (hasTask(task.getName())) {
-			taskList.set(taskList.indexOf(taskList.stream().filter(t -> 
-			t.getName().equals(task.getName())).findFirst()), task);
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	/**
 	 * Search task by name
 	 * @param name
 	 * @return true if task already exist
@@ -86,13 +71,28 @@ public class TaskManager {
 		return taskList.stream().anyMatch(t -> t.getName().equals(name));
 	}
 	/**
+	 * Search task by name
+	 * @param name
+	 * @return task with given name, return null if there are no such task
+	 */
+	public Task getTask(String name) {
+		return taskList.stream().filter(t -> t.getName().equals(name))
+				.findFirst().orElse(null);
+	}
+	/**
+	 * Get the activated task(At most one task can be activated)
+	 * @return the activated task, null if not exist
+	 */
+	public Task getActivatedTask() {
+		return taskList.stream().filter(t -> t.getState().equals(TaskState.Activated))
+				.findFirst().orElse(null);
+	}
+	/**
 	 * Initialize task from database, this method should
 	 * only be invoked when initializing
 	 */
 	public void initTask() {
 		taskList = new ArrayList<>();
-		//		taskList.add(new Task(TaskType.debug, "task1"));
-		//		taskList.add(new Task(TaskType.new_feature, "task2"));
 		FileInputStream fileInputStream;
 		try {
 			fileInputStream = new FileInputStream(new File("out.txt"));
