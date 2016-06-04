@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import little_mylyn.entity.Task;
+import little_mylyn.entity.TaskState;
 import little_mylyn.entity.TaskType;
+
+import java.io.*;
 
 public class TaskManager {
 	// use this list to store tasks, and write it back to the database
@@ -22,7 +25,7 @@ public class TaskManager {
 			taskManagerInstance = new TaskManager();
 		return taskManagerInstance;
 	}
-	
+
 	/**
 	 * Get all tasks
 	 * @return list of all tasks
@@ -35,9 +38,15 @@ public class TaskManager {
 	 * @param task 
 	 * @return true if succeed(name is unique and no other exceptions occur)
 	 */
+	//the parameter is the one that has been modified
 	public boolean addTask(Task task) {
-		//TODO
-		return false;
+		if (hasTask(task.getName())) {
+			return false;
+		}
+		else{
+			taskList.add(task);
+			return true;
+		}
 	}
 	/**
 	 * Remove a task
@@ -45,8 +54,13 @@ public class TaskManager {
 	 * @return true if succeed
 	 */
 	public boolean removeTask(Task task) {
-		//TODO
-		return false;
+		if (hasTask(task.getName())) {
+			taskList.remove(task);
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	/**
 	 * Update a task
@@ -54,8 +68,14 @@ public class TaskManager {
 	 * @return true if succeed
 	 */
 	public boolean updateTask(Task task) {
-		//TODO
-		return false;
+		if (hasTask(task.getName())) {
+			taskList.set(taskList.indexOf(taskList.stream().filter(t -> 
+			t.getName().equals(task.getName())).findFirst()), task);
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 	/**
 	 * Search task by name
@@ -63,23 +83,52 @@ public class TaskManager {
 	 * @return true if task already exist
 	 */
 	public boolean hasTask(String name) {
-		//TODO
-		return false;
+		return taskList.stream().anyMatch(t -> t.getName().equals(name));
 	}
 	/**
 	 * Initialize task from database, this method should
 	 * only be invoked when initializing
 	 */
 	public void initTask() {
-		//TODO taskList = ... (read from database)
 		taskList = new ArrayList<>();
-		taskList.add(new Task(TaskType.debug, "task1"));
-		taskList.add(new Task(TaskType.new_feature, "task2"));
+		//		taskList.add(new Task(TaskType.debug, "task1"));
+		//		taskList.add(new Task(TaskType.new_feature, "task2"));
+		FileInputStream fileInputStream;
+		try {
+			fileInputStream = new FileInputStream(new File("out.txt"));
+			InputStreamReader reader = new InputStreamReader(fileInputStream);
+			BufferedReader bufferedReader = new BufferedReader(reader);
+			String linetxtString;
+			while ((linetxtString = bufferedReader.readLine())!=null) {
+				String[] newStrings = linetxtString.split(";");
+				if (newStrings[1].equals("new feature")) {
+					taskList.add(new Task(TaskType.new_feature,newStrings[0]));
+				}
+				else {
+					taskList.add(new Task(TaskType.valueOf(newStrings[1]), newStrings[0]));
+				}
+			}
+			reader.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 	/**
 	 * Write task back to database, only invoked when plug-in stops
 	 */
 	public void saveTask() {
-		//TODO 
+		try {
+			FileOutputStream fsFileOutputStream = new FileOutputStream(new File("out.txt"));
+			PrintStream printStream = new PrintStream(fsFileOutputStream);
+			for (int i = 0; i < taskList.size(); i++) {
+				printStream.println(taskList.get(i).getName()+";"+
+						taskList.get(i).getType());
+			}
+			printStream.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
