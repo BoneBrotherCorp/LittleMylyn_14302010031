@@ -1,6 +1,7 @@
 package little_mylyn.views;
 
 import little_mylyn.actions.AddTaskAction;
+import little_mylyn.actions.UpdateTaskAction;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -30,6 +31,7 @@ public class TaskView extends ViewPart {
 		IActionBars bars = getViewSite().getActionBars();
 		IToolBarManager manager = bars.getToolBarManager();
 		manager.add(new AddTaskAction());
+		manager.add(new UpdateTaskAction());
 		
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "little_mylyn.viewer");
