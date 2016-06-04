@@ -5,6 +5,7 @@ Bundle-SymbolicName: little_mylyn;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: little_mylyn.Activator
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.jface
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
