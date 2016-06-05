@@ -3,6 +3,8 @@ package little_mylyn.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import little_mylyn.biz.TaskManager;
+
 public class Task {
 	private TaskState state;
 	private TaskType type;
@@ -24,6 +26,10 @@ public class Task {
 	}
 
 	public void setState(TaskState state) {
+		if (state.equals(TaskState.Activated))
+			TaskManager.getTaskManager().getAllTask().stream()
+				.filter(t -> t.getState().equals(TaskState.Activated))
+				.forEach(t -> t.setState(TaskState.Finished));
 		this.state = state;
 	}
 
