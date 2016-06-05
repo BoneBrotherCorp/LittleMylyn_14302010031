@@ -24,18 +24,18 @@ public class NewWizard extends Wizard{
 	
 	private NamePage name_p;
 	private TypePage type_p;
-	private StatePage state_p;
+//	private StatePage state_p;
 	private SucceedPage succeed_p;
 	      
 	public NewWizard() {
 		name_p = new NamePage();  
         type_p = new TypePage();  
-        state_p = new StatePage();
+//        state_p = new StatePage();
         succeed_p = new SucceedPage();
           
         this.addPage(name_p);  
         this.addPage(type_p);  
-        this.addPage(state_p);
+//        this.addPage(state_p);
         this.addPage(succeed_p);
         this.setWindowTitle("New Task");  
 	}
@@ -45,8 +45,8 @@ public class NewWizard extends Wizard{
 		String name = name_p.name_input.getText();
 		Button type_button_selected = type_p.b1.getSelection()?type_p.b1:(type_p.b2.getSelection()?type_p.b2:type_p.b3);
 		TaskType taskType = TaskType.get(type_button_selected.getText());
-		Button state_button_selected = state_p.b1.getSelection()?state_p.b1:(state_p.b2.getSelection()?state_p.b2:state_p.b3);
-		TaskState taskState = TaskState.get(state_button_selected.getText());
+//		Button state_button_selected = state_p.b1.getSelection()?state_p.b1:(state_p.b2.getSelection()?state_p.b2:state_p.b3);
+//		TaskState taskState = TaskState.get(state_button_selected.getText());
 		TaskManager.getTaskManager().addTask(new Task(taskType, name));
 		return true;
 	}  
@@ -64,7 +64,7 @@ public class NewWizard extends Wizard{
 		NamePage page = this;
 		public NamePage(){
 			super(NAME,"Create a task",null);
-			this.setMessage("Enter the name");
+			this.setMessage("Please enter the name.");
 			this.setPageComplete(false);
 		}
 
@@ -81,7 +81,14 @@ public class NewWizard extends Wizard{
 
 				@Override
 				public void modifyText(ModifyEvent arg0) {
-					page.setPageComplete(name_input.getText().length()>0);
+					if(TaskManager.getTaskManager().hasTask(name_input.getText())){
+						page.setPageComplete(false);
+						page.setErrorMessage("This name have existed.");
+					}else if(name_input.getText().length()==0){
+						page.setPageComplete(false);
+						page.setMessage("Please enter the name.");
+					}else 
+						page.setPageComplete(true);
 				}
 		    	 
 		     });
@@ -111,34 +118,33 @@ public class NewWizard extends Wizard{
 		     setControl(composite);  
 		}
 	}
-	
-	private class StatePage extends WizardPage{
-		Button b1,b2,b3;
-		public StatePage(){
-			super(STATE,"New a task",null);
-			this.setMessage("Set the state");
-		}
-
-		@Override
-		public void createControl(Composite parent) {
-			 Composite composite = new Composite(parent, SWT.NONE);  
-		     composite.setLayout(new GridLayout(1, false));  
-		     new Label(composite, SWT.CENTER).setText("State:");  
-		     b1 =  new Button(composite, SWT.RADIO);  
-		     b1.setText("New");  
-		     b1.setSelection(true);  
-		     b2 = new Button(composite, SWT.RADIO);  
-		     b2.setText("Activated");  
-		     b3 = new Button(composite, SWT.RADIO);  
-		     b3.setText("Finished");  
-		     setControl(composite); 
-		}
-	}
-	
+//	
+//	private class StatePage extends WizardPage{
+//		Button b1,b2,b3;
+//		public StatePage(){
+//			super(STATE,"New a task",null);
+//			this.setMessage("Set the state");
+//		}
+//
+//		@Override
+//		public void createControl(Composite parent) {
+//			 Composite composite = new Composite(parent, SWT.NONE);  
+//		     composite.setLayout(new GridLayout(1, false));  
+//		     new Label(composite, SWT.CENTER).setText("State:");  
+//		     b1 =  new Button(composite, SWT.RADIO);  
+//		     b1.setText("New");  
+//		     b1.setSelection(true);  
+//		     b2 = new Button(composite, SWT.RADIO);  
+//		     b2.setText("Activated");  
+//		     b3 = new Button(composite, SWT.RADIO);  
+//		     b3.setText("Finished");  
+//		     setControl(composite); 
+//		}
+//	}
+//	
 	private class SucceedPage extends WizardPage{
 		public SucceedPage(){
-			super(SUCCEED,"succeed",null);
-			this.setMessage("Done");
+			super(SUCCEED,"Done",null);
 		}
 
 		@Override
