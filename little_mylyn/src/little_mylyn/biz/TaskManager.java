@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import little_mylyn.entity.Task;
+import little_mylyn.entity.TaskFile;
 import little_mylyn.entity.TaskState;
 import little_mylyn.entity.TaskType;
-
 import java.io.*;
 
+
 public class TaskManager {
+	
 	// use this list to store tasks, and write it back to the database
 	// only when the plug-in stops
 	private List<Task> taskList;
@@ -25,6 +27,7 @@ public class TaskManager {
 			taskManagerInstance = new TaskManager();
 		return taskManagerInstance;
 	}
+
 
 	/**
 	 * Get all tasks
@@ -100,13 +103,19 @@ public class TaskManager {
 			BufferedReader bufferedReader = new BufferedReader(reader);
 			String linetxtString;
 			while ((linetxtString = bufferedReader.readLine())!=null) {
+				Task newTask;
 				String[] newStrings = linetxtString.split(";");
 				if (newStrings[1].equals("new feature")) {
-					taskList.add(new Task(TaskType.new_feature,newStrings[0]));
+					newTask = new Task(TaskType.new_feature,newStrings[0]);
 				}
 				else {
-					taskList.add(new Task(TaskType.valueOf(newStrings[1]), newStrings[0]));
+					newTask = new Task(TaskType.valueOf(newStrings[1]), newStrings[0]);
 				}
+				newTask.setState(TaskState.valueOf(newStrings[2]));
+				for (int i = 3; i < newStrings.length; i=i+2) {
+					newTask.addFile(new TaskFile(newStrings[i], newStrings[i+1]));
+				}
+				taskList.add(newTask);
 			}
 			reader.close();
 		} catch (Exception e) {
@@ -122,8 +131,13 @@ public class TaskManager {
 			FileOutputStream fsFileOutputStream = new FileOutputStream(new File("out.txt"));
 			PrintStream printStream = new PrintStream(fsFileOutputStream);
 			for (int i = 0; i < taskList.size(); i++) {
-				printStream.println(taskList.get(i).getName()+";"+
-						taskList.get(i).getType());
+				printStream.print(taskList.get(i).getName()+";"+
+						taskList.get(i).getType()+";"+taskList.get(i).getState());
+				for (int j = 0; j < taskList.get(i).getFileList().size(); j++) {
+					printStream.print(";"+taskList.get(i).getFileList().get(j).toString()+
+							";"+taskList.get(i).getFileList().get(j).getPath());
+				}
+				printStream.print("\n");
 			}
 			printStream.close();
 		} catch (FileNotFoundException e) {
