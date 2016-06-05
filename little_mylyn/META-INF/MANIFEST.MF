@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
  org.eclipse.core.resources;bundle-version="3.9.1",
  org.eclipse.ui.workbench,
- org.eclipse.ui;bundle-version="3.106.1"
+ org.eclipse.ui;bundle-version="3.106.1",
+ org.eclipse.swt
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui.part
