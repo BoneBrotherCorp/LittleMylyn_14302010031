@@ -7,7 +7,6 @@ import little_mylyn.entity.TaskFile;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
@@ -26,7 +25,6 @@ public class TaskView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(new TreeContentProvider(this));
-		viewer.setSorter(new ViewerSorter());
 		viewer.setInput(getViewSite());
 		viewer.addDoubleClickListener(event -> {
 			IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();

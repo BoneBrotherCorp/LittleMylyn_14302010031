@@ -88,8 +88,10 @@ public class NewWizard extends Wizard{
 					}else if(name_input.getText().length()==0){
 						page.setPageComplete(false);
 						page.setMessage("Please enter the name.");
-					}else 
+					}else {
+						page.setErrorMessage(null);
 						page.setPageComplete(true);
+					}
 				}
 		    	 
 		     });

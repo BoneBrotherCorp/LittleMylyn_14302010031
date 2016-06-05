@@ -12,7 +12,7 @@ public class Task {
 	
 	// all tasks are "new" when created
 	public Task(TaskType type, String name) {
-		this.state = TaskState.Activated;
+		this.state = TaskState.New;
 		this.type = type;
 		this.name = name;
 		fileList = new ArrayList<>();
