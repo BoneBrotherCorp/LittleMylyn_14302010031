@@ -1,5 +1,10 @@
 package little_mylyn;
 
+import little_mylyn.actions.ResourceChangedListener;
+import little_mylyn.biz.TaskManager;
+
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -28,6 +33,8 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(
+				new ResourceChangedListener(), IResourceChangeEvent.POST_CHANGE);
 	}
 
 	/*
@@ -36,6 +43,9 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		//write tree structure back to database here
+		TaskManager.getTaskManager().saveTask();
+		
 		super.stop(context);
 	}
 
