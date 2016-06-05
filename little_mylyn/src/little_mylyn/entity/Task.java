@@ -12,7 +12,7 @@ public class Task {
 	
 	// all tasks are "new" when created
 	public Task(TaskType type, String name) {
-		this.state = TaskState.New;
+		this.state = TaskState.Activated;
 		this.type = type;
 		this.name = name;
 		fileList = new ArrayList<>();
@@ -54,6 +54,10 @@ public class Task {
 		fileList.add(file);
 	}
 
+	public TaskFile getFile(String fileName) {
+		return fileList.stream().filter(f -> f.getName().equals(fileName)).findFirst().orElse(null);
+	}
+	
 	public ClassFolder getClassFolder() {
 		return classFolder;
 	}

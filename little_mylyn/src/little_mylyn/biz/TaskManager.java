@@ -52,6 +52,15 @@ public class TaskManager {
 		}
 	}
 	/**
+	 * Insure at most one task can be activated
+	 * @param task the only one task which can be activated 
+	 */
+	public void keepOneActivated(Task task) {
+		taskList.stream()
+			.filter(t -> t != task && t.getState().equals(TaskState.Activated))
+			.forEach(t -> t.setState(TaskState.Finished));
+	}
+	/**
 	 * Remove a task
 	 * @param task
 	 * @return true if succeed

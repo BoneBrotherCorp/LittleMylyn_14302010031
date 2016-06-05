@@ -48,6 +48,7 @@ public class NewWizard extends Wizard{
 //		Button state_button_selected = state_p.b1.getSelection()?state_p.b1:(state_p.b2.getSelection()?state_p.b2:state_p.b3);
 //		TaskState taskState = TaskState.get(state_button_selected.getText());
 		TaskManager.getTaskManager().addTask(new Task(taskType, name));
+		TaskView.refresh();
 		return true;
 	}  
 

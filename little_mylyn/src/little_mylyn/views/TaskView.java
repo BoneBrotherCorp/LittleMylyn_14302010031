@@ -2,8 +2,10 @@ package little_mylyn.views;
 
 import little_mylyn.actions.AddTaskAction;
 import little_mylyn.actions.UpdateTaskAction;
+import little_mylyn.entity.TaskFile;
 
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
@@ -22,12 +24,16 @@ public class TaskView extends ViewPart {
 	}
 	@Override
 	public void createPartControl(Composite parent) {
-		// TODO Auto-generated method stub
 		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(new TreeContentProvider(this));
 		viewer.setSorter(new ViewerSorter());
 		viewer.setInput(getViewSite());
-
+		viewer.addDoubleClickListener(event -> {
+			IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+	        if (selection.size() == 1 && selection.getFirstElement() instanceof TaskFile)
+	        	((TaskFile) (selection.getFirstElement())).open();
+		});
+		
 		IActionBars bars = getViewSite().getActionBars();
 		IToolBarManager manager = bars.getToolBarManager();
 		manager.add(new AddTaskAction());
@@ -44,5 +50,7 @@ public class TaskView extends ViewPart {
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
-	
+	public static TreeViewer getTreeViewer() {
+		return viewer;
+	}
 }

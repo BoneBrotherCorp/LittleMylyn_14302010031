@@ -1,21 +1,35 @@
 package little_mylyn.actions;
 
+import little_mylyn.entity.Task;
+import little_mylyn.views.EditWizard;
+import little_mylyn.views.NewWizard;
+import little_mylyn.views.TaskView;
+
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuCreator;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.internal.IWorkbenchGraphicConstants;
+import org.eclipse.ui.internal.WorkbenchImages;
 
 public class UpdateTaskAction implements IAction {
-
+	ImageDescriptor enabledImage = WorkbenchImages.getImageDescriptor(IWorkbenchGraphicConstants.IMG_ETOOL_PIN_EDITOR);
+	ImageDescriptor disabledImage = WorkbenchImages.getImageDescriptor(IWorkbenchGraphicConstants.IMG_ETOOL_PIN_EDITOR);
+	String actionId;
+	String description = "edit a task state";
+	String toolTipText = "edit task";
+	boolean isCheck = true;
+	boolean isEnabled = true;
+	boolean isHandled = true;
+	
 	@Override
 	public void addPropertyChangeListener(IPropertyChangeListener arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -27,103 +41,98 @@ public class UpdateTaskAction implements IAction {
 	@Override
 	public String getActionDefinitionId() {
 		// TODO Auto-generated method stub
-		return null;
+		return actionId;
 	}
 
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return description;
 	}
 
 	@Override
 	public ImageDescriptor getDisabledImageDescriptor() {
 		// TODO Auto-generated method stub
-		return null;
+		return disabledImage;
 	}
 
 	@Override
 	public HelpListener getHelpListener() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ImageDescriptor getHoverImageDescriptor() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return actionId;
 	}
 
 	@Override
 	public ImageDescriptor getImageDescriptor() {
-		// TODO Auto-generated method stub
-		return null;
+		return enabledImage;
 	}
 
 	@Override
 	public IMenuCreator getMenuCreator() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getStyle() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public String getText() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getToolTipText() {
-		// TODO Auto-generated method stub
-		return null;
+		return toolTipText;
 	}
 
 	@Override
 	public boolean isChecked() {
-		// TODO Auto-generated method stub
-		return false;
+		return isCheck;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return isEnabled;
 	}
 
 	@Override
 	public boolean isHandled() {
 		// TODO Auto-generated method stub
-		return false;
+		return isHandled;
 	}
 
 	@Override
 	public void removePropertyChangeListener(IPropertyChangeListener arg0) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("\nstart\n");
 	}
 
 	@Override
-	public void runWithEvent(Event arg0) {
-		// TODO Auto-generated method stub
-		
+	public void runWithEvent(Event event) {
+		TreeViewer treeViewer = TaskView.getTreeViewer();
+		IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
+		if (selection.size() == 1 && selection.getFirstElement() instanceof Task) {
+			EditWizard ew = new EditWizard((Task) selection.getFirstElement());
+			WizardDialog dialog = new WizardDialog(null, ew);
+			dialog.open();
+			return;
+		}
+		MessageDialog.openInformation(null, "Edit task", "Must select a task!");
 	}
 
 	@Override
@@ -134,102 +143,62 @@ public class UpdateTaskAction implements IAction {
 
 	@Override
 	public void setActionDefinitionId(String arg0) {
-		// TODO Auto-generated method stub
-		
+		this.actionId = arg0;
 	}
 
 	@Override
 	public void setChecked(boolean arg0) {
-		// TODO Auto-generated method stub
-		
+		this.isCheck = arg0;
 	}
 
 	@Override
 	public void setDescription(String arg0) {
-		// TODO Auto-generated method stub
-		
+		this.description = arg0;
 	}
 
 	@Override
 	public void setDisabledImageDescriptor(ImageDescriptor arg0) {
-		// TODO Auto-generated method stub
-		
+		this.disabledImage = arg0;
 	}
 
 	@Override
 	public void setEnabled(boolean arg0) {
-		// TODO Auto-generated method stub
-		
+		this.isEnabled = true;
 	}
 
 	@Override
 	public void setHelpListener(HelpListener arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setHoverImageDescriptor(ImageDescriptor arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setId(String arg0) {
-		// TODO Auto-generated method stub
-		
+		this.actionId = arg0;
 	}
 
 	@Override
 	public void setImageDescriptor(ImageDescriptor arg0) {
-		// TODO Auto-generated method stub
-		
+		this.enabledImage = arg0;
 	}
 
 	@Override
 	public void setMenuCreator(IMenuCreator arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setText(String arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setToolTipText(String arg0) {
-		// TODO Auto-generated method stub
-		
+		this.toolTipText = arg0;
 	}
-//
-//	@Override
-//	public void run(IAction action) {
-//		// TODO should get the selected task first, then show a small window for
-//		// user to change the task properties(name, state and type)
-//		
-//		// Caution: name should be checked, type must be one of the three types
-//		// only one task can be 'activated', i.e, if one task is set to be activated, 
-//		// the old activated task should be set to 'finished'
-//	}
-//
-//	@Override
-//	public void selectionChanged(IAction action, ISelection selection) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void dispose() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void init(IWorkbenchWindow window) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 }
