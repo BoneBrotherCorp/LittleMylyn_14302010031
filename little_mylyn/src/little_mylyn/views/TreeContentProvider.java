@@ -1,5 +1,6 @@
   package little_mylyn.views;
 
+
 import little_mylyn.biz.TaskManager;
 import little_mylyn.entity.Task;
 import little_mylyn.entity.ClassFolder;
@@ -7,7 +8,7 @@ import little_mylyn.entity.ClassFolder;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-public class TreeContentProvider implements ITreeContentProvider {
+public class TreeContentProvider implements ITreeContentProvider{
 	private TaskView view;
 	
 	public TreeContentProvider(TaskView view) {

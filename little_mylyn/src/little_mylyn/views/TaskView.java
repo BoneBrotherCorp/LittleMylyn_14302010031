@@ -2,7 +2,6 @@ package little_mylyn.views;
 
 import little_mylyn.actions.AddTaskAction;
 
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
@@ -16,8 +15,10 @@ public class TaskView extends ViewPart {
 
 	public static final String ID = "little_mylyn.views.TaskView";
 	
-	private TreeViewer viewer;
-	
+	private static TreeViewer viewer;
+	public static void refresh(){
+		viewer.refresh();
+	}
 	@Override
 	public void createPartControl(Composite parent) {
 		// TODO Auto-generated method stub
