@@ -22,35 +22,6 @@ public class AddTaskAction implements IAction{
 	boolean isCheck = true;
 	boolean isEnabled = true;
 	boolean isHandled = true;
-//	@Override
-//	public void run(IAction action) {
-//		// TODO should show a small window for user to enter
-//		// initial messages(name and type) for the new task.
-//		// Then add new task into the taskList if the action is valid 
-//		MessageDialog.openInformation(
-//				window.getShell(),
-//				"HelloWorldPlugin",
-//				"Hello, Eclipse world");
-//		// Caution: name should be checked, type must be one of the three types
-//	}
-//
-//	@Override
-//	public void selectionChanged(IAction action, ISelection selection) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void dispose() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void init(IWorkbenchWindow window) {
-//		// TODO Auto-generated method stub
-//		this.window = window;
-//	}
 
 	@Override
 	public void addPropertyChangeListener(IPropertyChangeListener arg0) {
