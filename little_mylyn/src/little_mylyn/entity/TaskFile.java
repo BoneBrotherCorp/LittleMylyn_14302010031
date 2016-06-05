@@ -2,7 +2,9 @@ package little_mylyn.entity;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -50,4 +52,5 @@ public class TaskFile {
 	public String toString() {
 		return name;
 	}
+
 }
