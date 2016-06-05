@@ -7,6 +7,7 @@ import little_mylyn.entity.Task;
 import little_mylyn.entity.TaskFile;
 import little_mylyn.entity.TaskState;
 import little_mylyn.entity.TaskType;
+
 import java.io.*;
 
 
@@ -127,8 +128,10 @@ public class TaskManager {
 				taskList.add(newTask);
 			}
 			reader.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (FileNotFoundException e) {
+			//ignore if file not exists
+		} catch (IOException e) {
+			//report when i/o error
 			e.printStackTrace();
 		} 
 	}
